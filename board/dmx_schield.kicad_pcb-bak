@@ -4178,7 +4178,7 @@
   (gr_line (start 104.775 133.35) (end 104.14 133.35) (layer F.SilkS) (width 0.1))
   (gr_line (start 104.775 130.81) (end 104.775 133.35) (layer F.SilkS) (width 0.1))
   (gr_line (start 104.14 130.81) (end 104.775 130.81) (layer F.SilkS) (width 0.1))
-  (gr_text V2.0.0alpha-01/05/2020 (at 86.36 163.83) (layer B.SilkS)
+  (gr_text V2.0-04/2020 (at 86.36 163.83) (layer B.SilkS)
     (effects (font (size 1.2 1.2) (thickness 0.2)) (justify mirror))
   )
   (gr_text Home-DMX-Control (at 86.36 161.29) (layer B.SilkS)
