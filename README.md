@@ -1,6 +1,6 @@
 # Home DMC Controll
 
-is a simple arduino based DMX controller to controll led lights installed in your home to be used with DMX controllers and relais.
+is a simple arduino based DMX controller to controll led lights installed in your home to be used with DMX controllers and relais. As with V2, the project is out of control and the main board is now more of a multifunctional development board.
 
 ## Idea
 
@@ -8,7 +8,19 @@ The selection for the lighting scene in daily use should be as simple as possibl
 
 The individual scenes should be adjustable directly on the controller without additional hardware. The input of the scenes works like on lighting control desks without motor faders via potentiometer and buttons. To make the firmware easy (without programmer and co) and maintainable by everyone, an Arduino was used, because it has a USB converter and the IDE is easy to use and install.
 
+Version 2 is an improved version 1 with added features:
+
+- Access to all IO portts via a connector
+- fully isolated interfaces (DMX, Button In)
+- 4 isolated digital outputs
+- revers voltage protection
+- addiotional optional switches (with custom routing)
+- removed I2C Temperature sensor
+
+
 ## End User Usage
+
+Firmware Verison of V1
 
 ### Everyay Usage
 
@@ -23,7 +35,7 @@ Exact User Interface depends on the project specific arduino programm. The brign
 
 #### Page 0
 
-It is used to adjust the brightness of the display and to show the temperature measured by the I2C temperature sensor.
+It is used to adjust the brightness of the display.
 
 #### Page X (1, ..., 9)
 
@@ -31,9 +43,9 @@ Each page stores one light scene. In my project I have 3 zones of WW/CW LED stri
 
 ## Hard- and Software
 
-Because I want to see if my hardware is running I have a power LED (D4) and a status LED (D5), which is switched on and off in my loop. This may cost an I/O pin, but you can always see if the firmware is running properly.
-
 The MAX481 (U2) is a transceiver for RS-485 and RS-422 communication based on DMX. It uses the TX and RX pins of the arduino. For a visual control of the DMX communication Leds are connected via buffer (U61).
+
+Digital inputs and outputs a isolated via optocouplers.
 
 The display is controlled serially via the library provided by the manufacturer.
 
@@ -58,11 +70,11 @@ All Switches and the interupt line are pulled up by R1 to R4 and R9. R4, C1 ect.
 
 #### LCD-Display
 
-The LCD-Display is controlled by 3 Wire SPI connected to the Hardwre SPI of the microcontroller. The MISO master input is not required for the display and is kept free in case additional SPI devices are added (for example via a shield). The Backlight is PWM dimmed via the transisor Q1.
+The LCD-Display is controlled by 3 Wire SPI connected to the Hardwre SPI of the microcontroller. The MISO master input is not required for the display and is kept free in case additional SPI devices are added (for example via a shield). The Backlight is PWM dimmed (D11) via the transisor Q1.
 
 #### Expansion Connector J1 J2
 
-The Connector(s) has the identical pinout as the Arduino Micro. Also you could use a stackable female connector strip for the Arduino.
+The Connector(s) has the identical pinout as the Arduino Micro. Also you could use a stackable female connector strip directly with the Arduino.
 
 #### LEDs
 
@@ -80,10 +92,11 @@ R=(V_IN-V_F)/I_F, V_F=1.2V I_F=20mA
 
 #### X40 - PWM/Output
 
-These autputs can be used in 2 ways. As digital output (with PWM) and as Low Side switch.
+These autputs can be used in 2 ways. As digital output with pullups and as Low Side switch (max 50mA, V_CE=0.1-0.2V).
 
-A defined pull up voltage can be defined with U140, R142 and R143 (bridging isolation).
+The voltage for the pullups can cpme from the connector, directly bridged from the input power (R140) or via the linear voltage regulator U140, R142 and R143 (kater ones bridging isolation).
 
+The emmiters of the photocouplers can be accessed directly via J41-J43 and J40-2. Conection between those can be broken at the Jumpers JP40-JP42. This way all four outputs can be used iolsated to each other.
 
 #### X50 - Power In
 
@@ -99,14 +112,14 @@ Danger Zone. Only assemble these components if you know what you are doing as th
 
 #### 1XX
 
-Bridges between unisolated interfaces.
+Bridges between unisolated interfaces:
 
-- **R130, R131**: VIN to PWM/Ouitput
-- **R140, R141**: VIN to Button Input
+- **R130, R131**: VIN/GND to PWM/Ouitput
+- **R140, R141**: VIN/GND to Button Input
 
 #### 2XX
 
-Bridges between unisolated interfaces and isolated internal circuit.
+Bridges between unisolated interfaces and isolated internal circuit:
 
 - **J250, J251**: Connect these Pads with a wire to use the buildin voltage regulator of the arduino (VIN).
 - **R260-R264**: Bypass isolation of DMX interface.
