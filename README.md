@@ -1,4 +1,9 @@
-# Home DMC Controll
+# Home DMC Controll - DONT USE!
+**Dont use the data in this repository. Board and Software are not well designed.**
+
+Improved Project was moved to 2 seperate repositories:
+- [Home-DMX-Board](https://github.com/jonolt/Home-DMX-Board)
+- [Home-DMX-Firmaware](https://github.com/jonolt/Home-DMX-Firmaware)
 
 is a simple arduino based DMX controller to controll led lights installed in your home to be used with DMX controllers and relais.
 
